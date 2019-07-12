@@ -4,10 +4,29 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const keys = require('./config/keys');
+require('./models/User');
+require('./services/passport');
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
+
+mongoose.connect(keys.mongoURI);
 
 var app = express();
+
+app.use(
+    cookieSession({
+      maxAge: 30 * 24 * 60 * 60 * 1000, //30 days
+      keys: [keys.cookieKey]
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +39,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
+require('./routes/authGoogle')(app);
+require('./routes/authFacebook')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

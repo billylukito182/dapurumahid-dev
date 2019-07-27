@@ -12,6 +12,9 @@ module.exports = (app) => {
 
     app.get(
         '/auth/facebook/callback',
-        passport.authenticate('facebook')
+        passport.authenticate('facebook'),
+        (req, res) => {
+            res.redirect('/api/current_user');
+        }
     );
 }

@@ -34,7 +34,9 @@ passport.use(
                     // make new record
                     new User({
                         userId: profile.id,
-                        provider: profile.provider
+                        provider: profile.provider,
+                        name: profile.displayName,
+                        email: profile.emails[0].value
                     })
                     .save()
                     .then(user => done(null,user))
@@ -64,7 +66,9 @@ passport.use(
                     // make new record
                     new User({
                         userId: profile.id,
-                        provider: profile.provider
+                        provider: profile.provider,
+                        name: profile.displayName,
+                        email: profile.emails[0].value
                     })
                     .save()
                     .then(user => done(null,user))

@@ -12,6 +12,7 @@ require('./models/User');
 require('./services/passport');
 
 var indexRouter = require('./routes/index');
+var distancesRouter = require('./routes/distances');
 // var usersRouter = require('./routes/users');
 
 mongoose.connect(keys.mongoURI);
@@ -39,6 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/api/distances', distancesRouter);
 // app.use('/users', usersRouter);
 require('./routes/authGoogle')(app);
 require('./routes/authFacebook')(app);

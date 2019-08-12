@@ -1,7 +1,5 @@
 # Don't track content of these folders
-node_modules/
 idea/
-keys.js
 
 
 # Compiled source #
